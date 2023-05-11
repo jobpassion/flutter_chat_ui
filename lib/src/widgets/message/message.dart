@@ -190,24 +190,24 @@ class Message extends StatelessWidget {
         InheritedChatTheme.of(context).theme.messageBorderRadius;
     final borderRadius = bubbleRtlAlignment == BubbleRtlAlignment.left
         ? BorderRadiusDirectional.only(
-            bottomEnd: Radius.circular(
+            topEnd: Radius.circular(
               !currentUserIsAuthor || roundBorder ? messageBorderRadius : 0,
             ),
-            bottomStart: Radius.circular(
+            topStart: Radius.circular(
               currentUserIsAuthor || roundBorder ? messageBorderRadius : 0,
             ),
-            topEnd: Radius.circular(messageBorderRadius),
-            topStart: Radius.circular(messageBorderRadius),
+            bottomEnd: Radius.circular(messageBorderRadius),
+            bottomStart: Radius.circular(messageBorderRadius),
           )
         : BorderRadius.only(
-            bottomLeft: Radius.circular(
+            topLeft: Radius.circular(
               currentUserIsAuthor || roundBorder ? messageBorderRadius : 0,
             ),
-            bottomRight: Radius.circular(
+            topRight: Radius.circular(
               !currentUserIsAuthor || roundBorder ? messageBorderRadius : 0,
             ),
-            topLeft: Radius.circular(messageBorderRadius),
-            topRight: Radius.circular(messageBorderRadius),
+            bottomLeft: Radius.circular(messageBorderRadius),
+            bottomRight: Radius.circular(messageBorderRadius),
           );
 
     return Container(
@@ -230,7 +230,7 @@ class Message extends StatelessWidget {
               right: isMobile ? query.padding.right : 0,
             ),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         textDirection: bubbleRtlAlignment == BubbleRtlAlignment.left
             ? null
@@ -248,6 +248,7 @@ class Message extends StatelessWidget {
                   onDoubleTap: () => onMessageDoubleTap?.call(context, message),
                   onLongPress: () => onMessageLongPress?.call(context, message),
                   onTap: () => onMessageTap?.call(context, message),
+                  behavior: HitTestBehavior.opaque,
                   child: onMessageVisibilityChanged != null
                       ? VisibilityDetector(
                           key: Key(message.id),
